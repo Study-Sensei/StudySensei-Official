@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:study_sensei/Pages/assignment_page.dart';
 import 'package:study_sensei/Pages/calendar.dart';
+import 'package:study_sensei/Pages/settings.dart';
 import 'package:study_sensei/Widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,20 +30,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
+        backgroundColor: Color(0XFF2A2F33),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             Container(
               height: 150.0,
               child: DrawerHeader(
-                decoration: BoxDecoration(color: Colors.white),
                 margin: EdgeInsets.all(0.0),
                 padding: EdgeInsets.all(0.0),
                 child: Center(
                   child: Text(
                     'Navigation',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontFamily: 'MoonDance',
                         fontSize: 50.0,
                         fontWeight: FontWeight.w700),
@@ -53,6 +55,32 @@ class _HomePageState extends State<HomePage> {
               height: 20.0,
             ),
             Drawer_item(
+              tilecolor: Color(0XFFBBB6A5),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Assignment_page()));
+              },
+              title: Row(
+                children: const [
+                  Icon(
+                    Icons.assignment,
+                    size: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      'Assignments',
+                      style: TextStyle(fontSize: 30.0),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Drawer_item(
+              tilecolor: Color(0XFFBBB6A5),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CalendarPage()));
@@ -73,13 +101,38 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Drawer_item(
+              tilecolor: Color(0XFFBBB6A5),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
+              },
+              title: Row(
+                children: const [
+                  Icon(
+                    Icons.settings,
+                    size: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 30.0),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
       appBar: AppBar(
         title: const Text('Study Sensei'),
         elevation: 5,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Color(0XFFBBB6A5),
       ),
       body: Container(
         height: double.infinity,
@@ -115,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    color: Colors.blueGrey,
+                    color: Color(0XFFBBB6A5),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
@@ -135,6 +188,7 @@ class _HomePageState extends State<HomePage> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
+                  backgroundColor: Color(0XFF8C9491),
                   child: Icon(
                     Icons.add,
                     color: Colors.white,
