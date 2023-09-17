@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:study_sensei/Pages/add_task_screen.dart';
 import 'package:study_sensei/Pages/assignment_page.dart';
 import 'package:study_sensei/Pages/calendar.dart';
 import 'package:study_sensei/Pages/settings.dart';
 import 'package:study_sensei/Widgets/drawer.dart';
+import 'package:study_sensei/Widgets/task_list.dart';
+import 'package:study_sensei/models/task_data.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -70,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(left: 30.0),
                     child: Text(
                       'Assignments',
-                      style: TextStyle(fontSize: 30.0),
+                      style: TextStyle(fontSize: 30.0, fontFamily: 'PlayFair'),
                     ),
                   ),
                 ],
@@ -95,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(left: 30.0),
                     child: Text(
                       'Calendar',
-                      style: TextStyle(fontSize: 30.0),
+                      style: TextStyle(fontSize: 30.0, fontFamily: 'PlayFair'),
                     ),
                   ),
                 ],
@@ -120,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(left: 30.0),
                     child: Text(
                       'Settings',
-                      style: TextStyle(fontSize: 30.0),
+                      style: TextStyle(fontSize: 30.0, fontFamily: 'PlayFair'),
                     ),
                   ),
                 ],
@@ -130,7 +134,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Study Sensei'),
+        title: const Text(
+          'Study Sensei',
+          style: TextStyle(fontFamily: 'PlayFair'),
+        ),
         elevation: 5,
         backgroundColor: Color(0XFFBBB6A5),
       ),
@@ -152,51 +159,67 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: 450,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: BoxDecoration(
+                      color: Color(0XFFBBB6A5),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0),
+                      ),
                     ),
-                    color: Color(0XFFBBB6A5),
+                    child: TasksList(),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      'Upcoming Assignments',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                  Container(
+                    padding: EdgeInsets.only(top: 30.0),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        '${Provider.of<TaskData>(context).taskCount} Assignments',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'PlayFair',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, right: 30.0, bottom: 30.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton(
+                        backgroundColor: Color(0XFF8C9491),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => SingleChildScrollView(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: AddTaskScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 60.0, right: 30.0),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton(
-                  backgroundColor: Color(0XFF8C9491),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            )
           ],
         ),
       ),
